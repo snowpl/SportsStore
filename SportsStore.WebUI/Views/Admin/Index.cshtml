@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SportsStore.Domain.Entities.Product>
+
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Administracja: Wszystkie produkty";
+}
+
+<h1>Wszystkie produkty</h1>
+
+<table class="grid">
+    <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th class="numericCol">Cena</th>
+        <th>Akcje</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductID</td>
+            <td>@Html.ActionLink(item.Name, "Edit", new {item.ProductID})</td>
+            <td class="numericCol">@item.Price.ToString("c")</td>
+            <td>@using (Html.BeginForm("Delete", "Admin"))
+                {
+                    @Html.Hidden("ProductID", item.ProductID)
+                <input type="submit" value="Usuń"/>
+                }</td>
+        </tr>
+    }
+</table>
+
+<p>@Html.ActionLink("Dodaj nowy produkt", "Create")</p>
